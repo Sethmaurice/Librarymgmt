@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script>
+
+    function confirmAction() {
+      let confirmation = confirm("Are you sure you want to delete?");
+      if (confirmation) {
+        return true;
+      } else {
+       
+        return false;
+      }
+
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <style>
+
+    .all{
+      background-color: #ffcc33;
+      height: 1500px;
+      width: 1500px;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+    }
+
+    nav ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+    }
+
+    nav ul li {
+      margin-right: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+    }
+
+    nav ul li:hover {
+      background-color: #555;
+    }
+
+    nav ul ul {
+      display: none;
+      position: absolute;
+      background-color: #333;
+      padding: 0;
+      margin-top: 10px;
+    }
+
+    nav ul ul li {
+      margin-right: 0;
+      display: block;
+    }
+
+    nav ul ul li a {
+      padding: 10px;
+      display: block;
+      color: #fff;
+    }
+
+    nav ul li:hover > ul {
+      display: block;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 20px;
+    }
+
+    section {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .container{
+      overflow: auto;
+      height: 450px;
+      width: 750px;
+    }
+
+    table a {
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
+      font-family: Arial, sans-serif; /* Set the font type */
+    }
+
+    table a:hover {
+      text-decoration: underline;
+    }
+
+    table span {
+      color: white;
+      font-size: 25px;
+      font-family: Arial, sans-serif; /* Set the font type */
+    }
+    .pag a{
+      background-color: green;
+      color: white;
+      border-radius: 20px;
+      padding: 15px 25px;
+      text-decoration: none;
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <nav>
+    <ul>
+      <li><a th:href="@{inde}">Home</a></li>
+      <li><a th:href="@{registration1}">Register</a></li>
+      <li><a th:href="@{home}">View</a></li>
+      <li><a th:href="@{sear}">Search</a></li>
+      <li><a th:href="@{/logout}">logout</a></li>
+    </ul>
+  </nav>
+</header>
+<div class="all">
+  <h1 class="text-center">Book shop management system </h1>
+<div class="container">
+
+  <div class="row">
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3">
+     
+    </div>
+  </div>
+  <table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+    <tr>
+      <td> ID</td>
+      <td>name</td>
+      <td>tel No</td>
+      <td>Email</td>
+
+
+      <td>Date</td>
+      <td>File</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="homedata: ${listCitizens}">
+      <td th:text="${homedata.id}"></td>
+      <td th:text="${homedata.names}"></td>
+      <td th:text="${homedata.tel}"></td>
+      <td th:text="${homedata.email}"></td>
+
+      <td th:text="${#dates.format(homedata.date,'yyyy-MM-dd')}"></td>
+      <td th:text="${homedata.file}"></td>
+      <td>
+        <a th:href="@{/home/update/{id}(id=${homedata.id})}" class="btn btn-secondary"> update</a>
+
+        <a th:href="@{/home/{id}(id=${homedata.id})}" class="btn btn-secondary"   onclick="return confirmAction()"> delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <input type="submit" Onclick="window.print()" value="Generate report">
+
+</div>
+
+
+  <table>
+
+    <tr th:if="${totalPage > 1}">
+      <td>
+        Total Rows: [[${totalItems}]]
+      </td>
+
+      <td>
+       <span th:each="i: ${#numbers.sequence(1,totalPage)}">
+        <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+         <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+       </span >
+      </td>
+
+      <td>
+        <a th:if="${currentPage < totalPage}" th:href="@{'/page/' + ${currentPage + 1}}">Next </a>
+        <span th:unless="${currentPage < totalPage}">Next page</span>
+      </td>
+
+      <td>
+        <a th:if="${currentPage < totalPage}" th:href="@{'/page/' + ${totalPage}}">Last</a>
+        <span th:unless="${currentPage < totalPage}">Last</span>
+      </td>
+    </tr>
+  </table>
+
+</div>
+</body>
+</html>

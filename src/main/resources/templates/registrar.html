@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .login-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            padding: 40px;
+            margin: 20px auto;
+            transform: translate(-50%, -55%);
+            background: rgba(167, 68, 169, 0.23);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0,0,0,.6);
+            border-radius: 10px;
+            margin-top: 450px;
+        }
+
+        .login-box p:first-child {
+            margin: 0 0 30px;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .login-box .user-box {
+            position: relative;
+        }
+
+        .login-box .user-box input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 30px;
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+            background: transparent;
+        }
+
+        .login-box .user-box label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: .5s;
+        }
+
+        .login-box .user-box input:focus ~ label,
+        .login-box .user-box input:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .login-box form a {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: .5s;
+            margin-top: 40px;
+            letter-spacing: 3px
+        }
+
+        .login-box a:hover {
+            background: #fff;
+            color: #272727;
+            border-radius: 5px;
+        }
+
+        .login-box a span {
+            position: absolute;
+            display: block;
+        }
+
+        .login-box a span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #fff);
+            animation: btn-anim1 1.5s linear infinite;
+        }
+        @keyframes btn-anim1 {
+            0% {
+                left: -100%;
+            }
+
+            50%,100% {
+                left: 100%;
+            }
+        }
+
+        .login-box a span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #fff);
+            animation: btn-anim2 1.5s linear infinite;
+            animation-delay: .375s
+        }
+
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+
+            50%,100% {
+                top: 100%;
+            }
+        }
+
+        .login-box a span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #fff);
+            animation: btn-anim3 1.5s linear infinite;
+            animation-delay: .75s
+        }
+
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+
+            50%,100% {
+                right: 100%;
+            }
+        }
+
+        .login-box a span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #fff);
+            animation: btn-anim4 1.5s linear infinite;
+            animation-delay: 1.125s
+        }
+
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+
+            50%,100% {
+                bottom: 100%;
+            }
+        }
+
+        .login-box p:last-child {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .login-box a.a2 {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .login-box a.a2:hover {
+            background: transparent;
+            color: #aaa;
+            border-radius: 5px;
+        }
+
+        
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .all{
+            background-color: #ffcc33;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+        }
+
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+
+        nav ul li:hover {
+            background-color: #555;
+        }
+
+        nav ul ul {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        nav ul ul li {
+            margin-right: 0;
+            display: block;
+        }
+
+        nav ul ul li a {
+            padding: 10px;
+            display: block;
+            color: #fff;
+        }
+
+        nav ul li:hover > ul {
+            display: block;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 20px;
+        }
+
+        section {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .container {
+
+            height: 850px;
+            width: 750px;
+        }
+        .lawyer1{
+            height: 200px;
+            width: 200px;
+            background-color: #ffcc33;
+        }
+        .lawyer2{
+            height: 200px;
+            width: 200px;
+            background-color:#ffcc33;
+            margin-left: 210px;
+            margin-top: -200px;
+        }
+        .lawyer3{
+            height: 200px;
+            width: 200px;
+            margin-left: 410px;
+            margin-top: -200px;
+            background-color: #ffcc33;
+        }
+        .lawyer4{
+            height: 200px;
+            width: 200px;
+            background-color: #ffcc33;
+        }
+        .lawyer5{
+            height: 200px;
+            width: 200px;
+            margin-left: 210px;
+            margin-top: -200px;
+            background-color: #ffcc33;
+        }
+        .lawyer6{
+            height: 200px;
+            width: 200px;
+            margin-left: 410px;
+            margin-top: -200px;
+            background-color:#ffcc33;
+        }
+        .descr{
+            height: 200px;
+            width: 600px;
+            background-color: #99A98F;
+            font-family: Arial;
+            font-size: 20px;
+        }
+        .hhh{
+            display: inline-block;
+            font-weight: 400;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{inde}">Home</a></li>
+            <li><a th:href="@{registration1}">Register</a></li>
+            <li><a th:href="@{home}">View</a></li>
+
+            <li><a th:href="@{/logout}">logout</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="all">
+    <h1 class="text-center">Book shop management system </h1>
+    <div class="container">
+
+        <div class="row">
+
+        </div>
+        <section class="gallery">
+
+            <div class="gallery-wrapper">
+                <center>
+                    <div class="card">
+
+
+                        <form th:action="@{/reg}" th:object="${citizen}" method="post">
+                            <div class="login-box">
+                                <p>provide your   case</p>
+                                <div th:if="${param.success}">
+                                    <p>Your  request is successfully  recorded</p>
+                                </div>
+
+                                <div th:if="${param.error}">
+                                    <p>something went wrong </p>
+                                </div>
+
+                                <div class="user-box">
+                                    <input  th:field="*{id}" required="" name="email" type="text">
+                                    <label>case Id</label>
+                                </div>
+                                <div class="user-box">
+                                    <input  th:field="*{names}" required="" name="email" type="text">
+                                    <label>names</label>
+                                </div>
+                                <div class="user-box">
+                                    <input  th:field="*{tel}" required="" name="email" type="text">
+                                    <label>tel</label>
+                                </div>
+                                <div class="user-box">
+                                    <input  th:field="*{email}" required="" name="email" type="email">
+                                    <label>Email</label>
+                                </div>
+
+
+                                <div class="user-box">
+                                    <input  th:field="*{date}" required="" name="email" type="date">
+                                    <label>date</label>
+                                </div>
+
+                                <div class="user-box">
+                                    <input  th:field="*{file}" required="" name="email" type="file">
+                                    <label>file</label>
+                                </div>
+
+
+                                <input type="submit" class="hhh" value="send">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </center>
+            </div>
+            </center>
+        </section>
+    </div>
+    </main>
+</div>
+</body>
+</html>
